@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "product")
 public class Product {
@@ -33,6 +35,7 @@ public class Product {
 	 * mappedBy: Voce deve colocar o nome do atributo da classe 'inversa' ao relacionamento
 	 */
 	@OneToMany(mappedBy="product", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JsonIgnore
 	private List<PurchaseProduct> purchaseProducts;
 
 	public Integer getId() {

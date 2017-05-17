@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "account")
 public class Account {
@@ -35,9 +37,10 @@ public class Account {
 	private BigDecimal amountPaid;
 	
 	/**
-	 * TODO: Sempre que tiver um relacionamento, tem que ter a anotaÃ§Ã£o inversa em cada classe
+	 * TODO: Sempre que tiver um relacionamento, tem que ter a anotação inversa em cada classe
 	 */
 	@OneToMany(mappedBy="account", fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JsonIgnore
 	private List<Purchase> purchaseProducts;
 
 	private boolean status;

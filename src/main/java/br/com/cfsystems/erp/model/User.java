@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -23,7 +25,7 @@ public class User {
 
 	private String name;
 	private Long document;
-	private Long numberPhone;
+	private Long phoneNumber;
 	private String email;
 	private String password;
 	private boolean status;
@@ -32,6 +34,7 @@ public class User {
 	 * TODO: Sempre que tiver um relacionamento, tem que ter a anotação inversa em cada classe
 	 */
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JsonIgnore
 	private List<Purchase> purchaseProducts;
 
 	public Integer getId() {
@@ -42,12 +45,12 @@ public class User {
 		this.id = id;
 	}
 
-	public Long getNumberPhone() {
-		return numberPhone;
+	public Long getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setNumberPhone(Long numberPhone) {
-		this.numberPhone = numberPhone;
+	public void setPhoneNumber(Long phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public boolean isStatus() {
@@ -98,7 +101,7 @@ public class User {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((numberPhone == null) ? 0 : numberPhone.hashCode());
+		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + (status ? 1231 : 1237);
 		return result;
@@ -133,10 +136,10 @@ public class User {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (numberPhone == null) {
-			if (other.numberPhone != null)
+		if (phoneNumber == null) {
+			if (other.phoneNumber != null)
 				return false;
-		} else if (!numberPhone.equals(other.numberPhone))
+		} else if (!phoneNumber.equals(other.phoneNumber))
 			return false;
 		if (password == null) {
 			if (other.password != null)
