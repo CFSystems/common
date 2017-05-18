@@ -1,24 +1,19 @@
 package br.com.cfsystems.erp.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "user")
+//@Entity
+//@Table(name = "user")
 public class User {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_user")
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@Column(name = "id_user")
 	private Integer id;
 
 	private String name;
@@ -28,11 +23,8 @@ public class User {
 	private String password;
 	private boolean status;
 	
-	/**
-	 * TODO: Sempre que tiver um relacionamento, tem que ter a anotação inversa em cada classe
-	 */
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	private List<Purchase> purchaseProducts;
+//	@OneToMany(mappedBy="user", fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private List<Purchase> purchaseProducts = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
