@@ -1,18 +1,15 @@
 package br.com.cfsystems.erp.model;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Email;
 
 @Entity
 @Table(name = "user")
@@ -20,22 +17,22 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_user")
+	@Column(name = "id")
 	private Integer id;
 
-	private String name;
-	private Long document;
-	private Long phoneNumber;
+	@Column
+	@Size(min = 1, max = 100)
+	@Email
 	private String email;
+
+	@Column
 	private String password;
+	
+	@Column
 	private boolean status;
 	
-	/**
-	 * TODO: Sempre que tiver um relacionamento, tem que ter a anotação inversa em cada classe
-	 */
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JsonIgnore
-	private List<Purchase> purchaseProducts;
+	@OneToOne
+	private Person person;
 
 	public Integer getId() {
 		return id;
@@ -45,36 +42,12 @@ public class User {
 		this.id = id;
 	}
 
-	public Long getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(Long phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
 	public boolean isStatus() {
 		return status;
 	}
 
 	public void setStatus(boolean status) {
 		this.status = status;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Long getDocument() {
-		return document;
-	}
-
-	public void setDocument(Long document) {
-		this.document = document;
 	}
 
 	public String getEmail() {
@@ -92,71 +65,13 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((document == null) ? 0 : document.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + (status ? 1231 : 1237);
-		return result;
+	
+	public Person getPerson() {
+		return person;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (document == null) {
-			if (other.document != null)
-				return false;
-		} else if (!document.equals(other.document))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (phoneNumber == null) {
-			if (other.phoneNumber != null)
-				return false;
-		} else if (!phoneNumber.equals(other.phoneNumber))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (status != other.status)
-			return false;
-		return true;
-	}
-
-	public List<Purchase> getPurchaseProducts() {
-		return purchaseProducts;
-	}
-
-	public void setPurchaseProducts(List<Purchase> purchaseProducts) {
-		this.purchaseProducts = purchaseProducts;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 }

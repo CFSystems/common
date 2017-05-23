@@ -1,6 +1,7 @@
 package br.com.cfsystems.erp.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,27 +25,29 @@ public class Account {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_account", updatable = false)
+	@Column(name = "id", updatable = false)
 	private Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "id_consumer")
 	private Consumer consumer;
-
-	@Column(scale = 2)
+	
+	@Column(name="amount_spent")
+	@Digits(integer=20, fraction=2)
 	private BigDecimal amountSpent;
 
-	@Column(scale = 2)
+	@Column(name="amount_paid")
+	@Digits(integer=20, fraction=2)
 	private BigDecimal amountPaid;
 	
-	/**
-	 * TODO: Sempre que tiver um relacionamento, tem que ter a anotação inversa em cada classe
-	 */
+	private boolean status;
+	
 	@OneToMany(mappedBy="account", fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JsonIgnore
-	private List<Purchase> purchaseProducts;
-
-	private boolean status;
+	private List<Purchase> purchaseProducts= new ArrayList<>();
+	
+	@OneToMany(mappedBy="account", fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private List<Payment> payments = new ArrayList<>();
 
 	public Integer getId() {
 		return id;

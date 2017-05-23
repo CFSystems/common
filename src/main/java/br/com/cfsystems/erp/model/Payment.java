@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 
 @Entity
 @Table(name = "payment")
@@ -17,10 +18,11 @@ public class Payment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_payment", updatable = false)
+	@Column(name = "id", updatable = false)
 	private Integer id;
 
-	@Column(scale = 2)
+	@Column
+	@Digits(integer=20, fraction=2)
 	private BigDecimal value;
 
 	@ManyToOne
@@ -28,7 +30,7 @@ public class Payment {
 	private Account account;
 
 	@ManyToOne
-	@JoinColumn(name = "id_paymentmethod")
+	@JoinColumn(name = "id_payment_method")
 	private PaymentMethod paymentMethod;
 
 	public Integer getId() {
